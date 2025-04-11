@@ -1,33 +1,26 @@
-# medmovies
-🎬 Movie Info App
-This is a Django-based web application that provides a clean and interactive interface for discovering movies and TV shows. The app includes simple authentication features such as login and registration.
+# 🎬 Medmovies App
 
-🔧 Tech Stack
-Backend: Django (Python)
+This is a **Django-based web application** that provides a clean and interactive interface for discovering movies and TV shows. The app includes **simple authentication** features such as login and registration.
 
-Authentication: Custom authentication (Login & Register)
+## 🔧 Tech Stack
 
-Database: PostgreSQL (hosted on Supabase)
+- **Backend**: Django (Python)
+- **Authentication**: Custom authentication (Login & Register)
+- **Database**: PostgreSQL (hosted on [Supabase](https://supabase.com))
+- **Frontend**: Tailwind CSS
+- **API**: [TMDb (The Movie Database)](https://www.themoviedb.org/documentation/api)
 
-Frontend: Tailwind CSS
+## 📺 Features
 
-API: TMDb (The Movie Database)
+- 🔐 User authentication system (register & login)
+- 🎞️ Search for movies and TV shows
+- 👥 View full cast details
+- 🎥 Watch trailers
+- 📍 Discover where to watch (platform availability)
 
-📺 Features
-🔐 User authentication system (register & login)
+## 🚀 Setup & Run
 
-🎞️ Search for movies and TV shows
-
-👥 View full cast details
-
-🎥 Watch trailers
-
-📍 Discover where to watch (platform availability)
-
-🚀 Setup & Run
-bash
-Copy
-Edit
+```bash
 # Clone the repo
 git clone https://github.com/your-username/medmovies.git
 cd medmovies
@@ -40,6 +33,9 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
 
 # Add your environment variables (e.g., TMDB API Key, Supabase DB credentials)
+
+# Run the server
+python manage.py runserver
 
 # Run the server
 python manage.py runserver
