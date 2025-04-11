@@ -12,7 +12,7 @@ This is a **Django-based web application** that provides a clean and interactive
 
 ## 📺 Features
 
-- 🔐 User authentication system (register & login)
+- 🔐 Simple User authentication system (register & login)
 - 🎞️ Search for movies and TV shows
 - 👥 View full cast details
 - 🎥 Watch trailers
