@@ -9,6 +9,8 @@ This is a **Django-based web application** that provides a clean and interactive
 - **Database**: PostgreSQL (hosted on [Supabase](https://supabase.com))
 - **Frontend**: Tailwind CSS
 - **API**: [TMDb (The Movie Database)](https://www.themoviedb.org/documentation/api)
+- **Asynchronous Code**: This project utilizes asynchronous functionality with **Uvicorn** as the ASGI server for handling concurrent requests efficiently.
+
 
 ## 📺 Features
 
@@ -37,7 +39,8 @@ pip install -r requirements.txt
 # Run the server
 python manage.py runserver
 
-# Run the server
-python manage.py runserver
+# or 
+uvicorn medmovies.asgi:application --reload
+
 📝 Notes
 Make sure to set up your .env or environment configuration for the API key and Supabase database credentials.
