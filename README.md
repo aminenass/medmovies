@@ -22,7 +22,7 @@ This is a **Django-based web application** that provides a clean and interactive
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/medmovies.git
+git clone https://github.com/aminenass/medmovies.git
 cd medmovies
 
 # Create virtual environment & activate
