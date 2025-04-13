@@ -1,0 +1,72 @@
+{% load custom_filters %} {%load static%}
+      <!-- In your HTML -->
+      <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 transition-opacity duration-1000">
+        <div class="loader animate-spin rounded-full border-4 border-t-blue-500 border-gray-200 h-12 w-12"></div>
+      </div>
+      
+<div id="content">
+      
+<div class="bg-gradient-to-b from-indigo-900 via-gray-800 to-blue-950 ">
+
+
+  {%include "carousel.html" with link="movies" name="MOVIES" items=movie %}
+
+  {%include "carousel.html" with link="tvshows" name="TVSHOWS" items=tvshow  %}
+
+      <!-- Mobile-Friendly Trailer Section -->
+      <section class="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[50vh] xl:min-h-screen flex items-center justify-center overflow-hidden pb-8 md:pt-12">
+          <!-- Background Image with Overlays -->
+          <div class="absolute inset-0 lg:inset-0">
+            <img 
+              src="https://image.tmdb.org/t/p/original{{random_tv_movie2.backdrop_path}}" 
+              alt="Background" 
+              class="w-full h-full object-cover object-center blur-[2px] sm:blur-sm"
+              
+            >
+            <div class="absolute inset-0 bg-gradient-to-b from-gray-900/95 via-gray-900/80 to-gray-900/95"></div>
+          </div>
+          
+          <!-- Video Container -->
+          <div class="relative z-10 w-full max-w-4xl px-2 sm:px-4">
+            <div class="aspect-w-16 aspect-h-9 shadow-lg sm:shadow-2xl rounded-lg sm:rounded-xl overflow-hidden max-h-[50vh] sm:max-h-none">
+              {% with random_trailer=trailer|first %}
+              <iframe
+                src="https://www.youtube.com/embed/{{random_trailer.key}}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1" 
+                class="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen
+                loading="lazy"
+                webkitallowfullscreen
+                mozallowfullscreen
+              ></iframe>
+              {% endwith %}
+              
+              <!-- Mobile-optimized Overlay -->
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="animate-pulse absolute inset-0 bg-black/20 sm:bg-black/30 flex items-center justify-center">
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+    
+
+      <!-- anime carousel  -->
+      {%include "carousel.html" with link="tvshows/anime" name="ANIME" items=anime_action  %}
+
+    
+        <!-- turkish drama carousel  -->
+        {%include "carousel.html" with link="tvshows/turkish" name="TRDRAMA" items=trdrama  %}
+
+      
+
+        <!-- korean drama carousel  -->
+        {%include "carousel.html" with link="tvshows/korean" name="KDRAMA" items=kdrama  %}
+      
+
+
+  </div>
+</div>
+
+
+

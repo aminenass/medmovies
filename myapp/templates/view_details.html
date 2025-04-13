@@ -1,0 +1,151 @@
+{% extends "base.html" %} {% load custom_filters %} {%load static%} {% block content %} 
+      <!-- In your HTML -->
+      <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 transition-opacity duration-1000">
+        <div class="loader animate-spin rounded-full border-4 border-t-blue-500 border-gray-200 h-12 w-12"></div>
+      </div>
+      
+<div id="content">
+<!-- Main Container with Background -->
+<div class="relative">
+  <!-- Background Image with Overlays -->
+  <div class="fixed inset-0 -z-50">
+    <img 
+      src="https://image.tmdb.org/t/p/original{{data.backdrop_path}}"
+      alt="Background"
+      class="w-full h-full object-cover object-center"
+      
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-gray-900/90 via-gray-900/50 to-gray-900/90"></div>
+    <div class="absolute inset-0 bg-gray-900/70"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative flex items-start md:items-center justify-center overflow-hidden pt-24 pb-12">
+    <div class="relative z-10 max-w-screen-xl px-4 mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-16">
+      <!-- Text Content -->
+      <div class="text-center md:text-left md:w-[55%] lg:w-[60%] md:mr-8 lg:mr-12">
+        <h1 class="mb-4 text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white drop-shadow-2xl">
+          {%if data.title %}{{data.title}}{%else%}{{data.name}}{%endif%}
+        </h1>
+        
+        <p class="mb-6 font-light text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto md:mx-0 text-balance line-clamp-4 md:line-clamp-3">
+          {{ data.overview }}
+        </p>
+   <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-3 md:gap-4">
+        <a href="{{data.homepage}}" class="inline-flex items-center justify-center px-4 py-2.5 md:px-5 md:py-3 text-sm md:text-base font-medium text-white border hover:bg-white hover:text-gray-900 rounded-lg transition-colors">
+          Where to watch
+        </a>
+        {%if data.imdb_id%}
+        <a href="https://www.imdb.com/title/{{data.imdb_id}}" class="inline-flex items-center justify-center px-4 py-2.5 md:px-5 md:py-3 text-sm md:text-base font-medium text-white hover:bg-white hover:text-gray-900 rounded-lg transition-colors">
+          Read More
+          {%else%}
+          <a href="{{data.homepage}}" class="inline-flex items-center justify-center px-4 py-2.5 md:px-5 md:py-3 text-sm md:text-base font-medium text-white hover:bg-white hover:text-gray-900 rounded-lg transition-colors">
+            Read More
+            {%endif%}
+          <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </a> 
+      </div>
+      <div class="mt-8">
+        {% if data.production_companies or data.networks %}
+        <div class="flex flex-col gap-y-4 text-sm">
+          {% if data.production_companies %}
+          <div class="flex flex-wrap items-baseline gap-x-2 gap-y-2">
+            <span class="text-gray-400 font-medium mr-2">Production:</span>
+            {% for group in data.production_companies %}
+              <span class="text-gray-200 hover:text-blue-600">
+                {{ group.name }}{% if not forloop.last %},{% endif %}
+              </span>
+            {% endfor %}
+          </div>
+          {% endif %}
+      
+          {% if data.networks %}
+          <div class="flex flex-wrap items-baseline gap-x-2 gap-y-2">
+            <span class="text-gray-400 font-medium mr-2">Broadcast:</span>
+            {% for group in data.networks %}
+              <span class="text-gray-200 hover:text-blue-600">
+                {{ group.name }}{% if not forloop.last %},{% endif %}
+              </span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      </div>
+
+
+      <!-- Poster Image -->
+       <!-- Image Container (Hidden on mobile) -->
+       <div class="hidden md:block md:w-[45%] lg:w-[40%] relative md:pl-8 lg:pl-12">
+        <div class="aspect-[2/3] w-full bg-gray-800 rounded-lg overflow-hidden">
+          <img
+            src="https://image.tmdb.org/t/p/w500{{data.poster_path}}"
+            alt="Movie Poster"
+            class="w-full h-full object-cover rounded-lg shadow-xl transform hover:scale-105 transition-transform"
+            width="400"
+            height="600"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Actor Page Section -->
+  <div class="relative z-10">
+    {% include "actorpage.html" %}
+  </div>
+
+  {%if trailer|get_length > 0 %}
+     <!-- Mobile-Friendly Trailer Section -->
+     <section class="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[50vh] xl:min-h-screen flex items-center justify-center overflow-hidden pb-8 md:pt-12">
+      <!-- Background Image with Overlays -->
+      <div class="absolute inset-0 lg:inset-0">
+        <img 
+          src="https://image.tmdb.org/t/p/w1280{{data.backdrop_path}}" 
+          alt="Background" 
+          class="w-full h-full object-cover object-center blur-[2px] sm:blur-sm"
+        >
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/95 via-gray-900/80 to-gray-900/95"></div>
+      </div>
+      
+      <!-- Video Container -->
+      <div class="relative z-10 w-full max-w-4xl px-2 sm:px-4">
+        {% with random_trailer=trailer|get_random %} 
+
+        <div class="aspect-w-16 aspect-h-9 shadow-lg sm:shadow-2xl rounded-lg sm:rounded-xl overflow-hidden max-h-[50vh] sm:max-h-none">
+          <iframe
+            src="https://www.youtube.com/embed/{{random_trailer.key}}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1" 
+            class="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen
+            loading="lazy"
+            webkitallowfullscreen
+            mozallowfullscreen
+          ></iframe>
+          {%endwith%}
+          <!-- Mobile-optimized Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="animate-pulse absolute inset-0 bg-black/20 sm:bg-black/30 flex items-center justify-center">
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+  {%endif%}
+  
+            <!-- Left side - Title with subtle shine effect -->
+            <div class="relative hidden sm:block px-6 pt-4 ">
+              <span class="text-xl sm:text-3xl capitalize  font-bold tracking-tight text-white sm:text-gray-100 drop-shadow-lg">
+                More Like This              
+              </span>
+            </div>
+  {%include "carousel.html" with link=types name="More Like This" items=suggestion %}
+
+</div>
+</div>
+
+{%endblock content%}
+

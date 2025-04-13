@@ -1,0 +1,51 @@
+{% extends "base.html" %}{% load custom_filters %}{% block content %}   {%include "breadcrumbs.html"%}
+<div class="max-w-7xl mx-auto p-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+  {% for n in tvshow %}
+  {% if n.poster_path %}
+  <div class="group relative w-full h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.02]">
+    <!-- Poster Image -->
+    <img
+      src="https://image.tmdb.org/t/p/w500{{n.poster_path}}"
+      alt="{{n.name}} poster"
+      class="w-full h-full object-cover transform transition duration-300 group-hover:scale-110"
+    />
+
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+    <!-- Content Container -->
+    <div class="absolute inset-0 p-4 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <!-- Rating -->
+      {% if n.vote_average %}
+      <div class="absolute top-4 right-4 bg-white text-black px-3 py-1 rounded-full text-sm font-bold mb-2">
+        ★ {{n.vote_average | floatformat:1}}
+      </div>
+      {% endif %}
+
+      <!-- Title -->
+      <h3 class="text-white text-xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 line-clamp-2">
+        {{n.name}}
+      </h3>
+
+      <!-- Overview -->
+      <p class="text-gray-200 text-sm md:line-clamp-4 line-clamp-3 text-pretty mb-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-400">
+        {{n.overview}}
+      </p>
+
+      <!-- Fake "Play" Button -->
+      <div class="w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+
+        <a href="{% url 'media_detail' item_id=n.id types='tv' %}"> 
+        <button class="w-full py-2 text-white font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 ">
+          View Details
+        </button>
+        </a> 
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+    {%include "pagination.html"%}
+{%endblock%}  

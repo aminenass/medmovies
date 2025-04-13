@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+
+
+{% block branding %}
+  <h1 id="site-name">
+    <a href="{% url 'admin:index' %}">Medmovies administration</a> <!-- Left: Default Branding -->
+  </h1>
+{% endblock %}
+
+{% block usertools %}
+  <div id="user-tools">
+    Welcome, {{ user.get_username }} , 
+    <a href="/">🏠 View site</a> |
+    <a href="{% url 'admin:password_change' %}">🔑 Change password</a> |
+    <a href="{% url 'logout' %}">🚪 Log out</a> <!-- Right: Custom Links -->
+  </div>
+
+{% endblock %}

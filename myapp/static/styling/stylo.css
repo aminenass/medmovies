@@ -1,0 +1,17 @@
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Optional: Add these for better drag experience */
+  .carousel {
+    cursor: grab;
+    user-select: none;
+  }
+  
+  .carousel:active {
+    cursor: grabbing;
+  }

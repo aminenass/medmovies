@@ -1,0 +1,78 @@
+{% load static %}
+
+<nav class="fixed w-full px-4 z-40 bg-gray-900/20 backdrop-blur-sm transition-all duration-300">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-3">
+    <!-- Logo -->
+    <a href="{% url 'home' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <span class="text-2xl font-semibold text-white">Med<span class="text-blue-600">movies</span></span>
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button data-collapse-toggle="navbar-user" type="button" class="lg:hidden p-2 text-gray-300 hover:text-white">
+      <span class="sr-only">Open menu</span>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="hidden w-full lg:flex lg:w-auto lg:items-center" id="navbar-user">
+            <!-- Mobile Search Bar -->
+            <form action="{% url 'search_results' %}" method="GET" >
+            <div class="lg:hidden mt-4 w-full">
+              <div class="relative">
+                <button type="submit" class="absolute inset-y-0 start-0 flex items-center ps-3">
+                  <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                  </svg>
+                </button>
+                <input 
+                  type="text" 
+                  name="q"  
+                  value="{{ request.GET.q }}" 
+                  class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-transparent focus:ring-gray-500 focus:border-gray-500 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                  placeholder="Search..."
+                >
+              </div>
+            </div>
+            </form>
+      <!-- Navigation Links -->
+      <ul class="flex flex-col lg:flex-row lg:space-x-6 text-white font-medium py-2">
+        <li><a href="{% url 'home' %}" class="hover:text-white text-blue-600 px-3">HOME</a></li>
+        <li><a href="{% url 'tvshows' %}" class="hover:text-blue-600 px-3">TV SHOWS</a></li>
+        <li><a href="{% url 'movies' %}" class="hover:text-blue-600 px-3">MOVIES</a></li>
+        <li><a href="{% url 'tvshows-category' 'anime' %}" class="hover:text-blue-600 px-3">ANIME</a></li>
+      </ul>
+    </div>
+
+    <!-- Desktop Search and Auth -->
+     <form action="{% url 'search_results' %}" method="GET" >
+    <div class="flex items-center space-x-2">
+      <!-- Desktop Search Bar -->
+      <div class="relative hidden lg:block"> 
+        <button type="submit" class="absolute inset-y-0 start-0 flex items-center ps-3 ">
+            <svg class="w-4 h-4 text-gray-400 hover:text-gray-500 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+        </button>
+        <input 
+        required=""
+        type="text" 
+        id="search-navbar" 
+        name="q"  
+        value="{{ request.GET.q }}" 
+        class="block lg:w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-transparent focus:ring-gray-500 focus:border-gray-500 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+        placeholder="Search..."
+        >
+      </div>
+    </form>
+      <!-- Auth Links -->
+        {% if user.is_authenticated %}
+          <a  href="{% url 'logout' %}" class="border-0 lg:border lg:border-gray-400 rounded-lg px-4 h-[38px] transition-colors flex items-center text-sm text-white hover:underline leading-[1]">Sign out</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="border-0 lg:border lg:border-gray-400 rounded-lg px-4 h-[38px] transition-colors flex items-center text-sm text-white hover:underline leading-[1]">Sign in</a>
+        {% endif %}
+    </div>
+  </div>
+</nav>
+

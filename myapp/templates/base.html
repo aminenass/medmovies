@@ -1,0 +1,94 @@
+{%load static tailwind_tags %} {%load static%}
+
+<!DOCTYPE html>
+<html class="h-full bg-gray-900 ">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styling/stylo.css' %}" />
+    <title>Medmovies</title>
+    {% tailwind_css %} 
+
+  </head>
+  <body >
+
+    {%include 'navbar.html'%}
+<div class="flex flex-col min-h-screen">
+    <main class="flex-grow">{%block content%} {%endblock content%}</main> 
+
+    <footer class="bg-gradient-to-t from-gray-900 via-gray-900 ">
+      <div class="w-full max-w-screen-xl mx-auto p-4 sm:py-8"> 
+        <div class="sm:flex sm:items-center sm:justify-between">
+          <a
+            href="/"
+            class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+          >
+            <span
+              class="sm:block hidden self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+              >Medmovies
+              </span>
+          </a>
+          <ul
+            class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400"
+          >
+            <li>
+              <a href="#" class="hover:underline me-4 md:me-6">About</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline me-4 md:me-6"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <hr class="sm:mx-auto border-gray-700 sm:my-8" />
+        <span
+          class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
+          >© 2025 <a href="https://medaminenassim.netlify.app/" class="hover:underline">Mohamed amine nassim™</a>. All
+          Rights Reserved.</span
+        >
+      </div>
+    </footer>
+  </div>
+  <script>
+        
+    // In your JS
+    document.addEventListener('DOMContentLoaded', () => {
+      const preloader = document.getElementById('preloader');
+      const content = document.getElementById('content');
+      
+      // Minimum 1s display + wait for critical assets
+      Promise.all([
+        new Promise(resolve => setTimeout(resolve, 1000)), // Minimum 1s
+        document.fonts.ready, // Wait for fonts
+        ...Array.from(document.images)
+          .filter(img => img.loading === 'eager')
+          .map(img => img.complete ? Promise.resolve() : new Promise(resolve => {
+            img.onload = img.onerror = resolve;
+          }))
+      ]).then(() => {
+        preloader.classList.add('opacity-0');
+        content.classList.remove('opacity-0');
+        setTimeout(() => preloader.remove(), 1000); // Match transition duration
+      });
+    });
+  
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script  src="{% static 'styling/stylos.js' %}" ></script>
+
+  </body>
+</div>
+
+</html>

@@ -1,0 +1,89 @@
+# Python.gitignore
+.env
+*.env
+
+# Ignore the virtual environment
+.venv/
+venv/
+env/
+myenv/
+
+# Django migrations
+**/migrations/*
+# Keep __init__.py to avoid issues
+!**/migrations/__init__.py  
+
+
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3-journal
+
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# or
+*.py[cod]
+
+
+
+# VSCode and PyCharm settings
+.vscode/
+.idea/
+
+
+# Local development and test files
+*.bak
+*.swp
+*.swo
+*.swn
+
+# Distribution / packaging
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Testing and coverage reports
+coverage/
+*.cover
+*.coverage
+*.hypothesis/
+*.tox/
+.nox/
+*.nox/
+.coverage*
+
+# macOS Finder files
+.DS_Store
+
+# Windows thumbnail cache / ignore any other system-specific files
+Thumbs.db
+
+# JetBrains IDEs
+*.iml
+.idea/
+
+#test file
+testq.py
+
+
+# Ignore static files (if not using external storage)
+staticfiles/
+media/
+node_modules/
+dist/
+
+# Ignore compiled CSS output in theme/static/css/dist
+theme/static/css/dist/
+
+# Ignore node_modules (always)
+theme/static_src/node_modules/
+
+# Ignore any build output
+theme/static/css/style.css
