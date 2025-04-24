@@ -52,6 +52,17 @@ async def fetch_data(url: str) -> List[Dict[str, Any]]:
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
             print(f"Error fetching {url}: {e}")
             return []
+        
+@async_cached(cache)   
+async def fetch_full_data(url: str) -> Dict[str, Any]:
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.get(url, headers=headers, timeout=10) as response:
+                response.raise_for_status()
+                return await response.json()
+        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+            print(f"Error fetching full data from {url}: {e}")
+            return {}
 
 # Async Movie endpoints
 async def movies(page: int , genre_ids : List[int] = None) -> List[Dict[str, Any]] :
@@ -65,6 +76,7 @@ async def movies(page: int , genre_ids : List[int] = None) -> List[Dict[str, Any
         "with_genres": ",".join(map(str, genre_ids)) if genre_ids else None
     }
     url = await build_url(base_url, params)
+    
     return await fetch_data(url)
 
 async def trailer(movie_id: int , types : str = None) -> List[Dict[str, Any]]:
@@ -221,4 +233,24 @@ async def get_details_by_id(item_id: int, types: str):
         print(f"Error fetching data: {str(e)}")
         return None, None  # Return None in case of an error
 
+
+# Async Movie endpoints
+async def recomendation(page: int , movie_id : str, types: str)  :
+    
+    
+    base_url = f"/movie/{movie_id}/recommendations" if types == 'movie' else f"/tv/{movie_id}/recommendations"
+
+
+
+    params = {
+        "language": "en-US",
+        "page": page, 
+    }
+    url = await build_url(base_url, params)
+    response_data =  await fetch_full_data(url)
+    
+    recommendations = response_data.get("results", [])
+    total_pages = response_data.get("total_pages", 1)
+        
+    return  recommendations, total_pages
 

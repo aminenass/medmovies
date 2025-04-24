@@ -123,50 +123,44 @@ async def media_detail_view(request, item_id,types,page=1):
     data,credits = await get_details_by_id(item_id,types)
     trailer_data = await trailer(data["id"],types) if data else None
     
-    # suggesstion  = await movies(page,genre_ids=[genres["id"] for genres in data["genres"]]) if types == "movie" else await tv_shows(page,genre_ids=[genres["id"] for genres in data["genres"]])
-    
-    # Limit genres initially
-    list_genre = lambda n : [g["id"] for g in data.get("genres", [])][:n] if data else []
-    # Proper async suggestion handling
-    suggestion = []
-    if data:
-        try:
-            if types == "movie":
-                n = 4 
-                while n > 0 : 
-                    # Movies function should accept genre_ids parameter
-                    suggestion = await movies(page=page, genre_ids=list_genre(n)) 
-                    if len(suggestion) >= 5 :
-                        break # good enough, stop retrying
-                    n - 1
-                        
-            else:
-                n = 4 
-                while n > 0 : 
-                    # async def tv_shows(page: int, category: str, genre_ids: List[int])
-                    suggestion = await tv_shows(
-                        page=page,
-                        category="all",  # Or None if you want trending
-                        genre_ids=list_genre(n)
-                    )
-                    if len(suggestion) >= 5 : 
-                        break # good enough, stop retrying
-                    n - 1
-                        
-        except Exception as e:
-            print(f"Suggestion fetch error: {e}")
-            suggestion = []    
-    
-    if not data :
-        raise Http404("Content not found")
+    suggestion = await recomendation(page=1, movie_id= item_id, types=types)
+
 
     context = {
         'data': data,
         "credits":credits,
         "trailer":trailer_data,
-        "suggestion":  suggestion ,
-        "types" : "movies" if types == "movie" else "tvshows" ,  
+        "suggestion":  suggestion[0] ,
+        "types" : f"recomendation/{types}/{item_id}"
          
     }
 
     return await sync_to_async(render)(request, "view_details.html", context)
+
+
+async def media_recomendation(request,item_id,types,page=1):
+    
+    page = int(request.GET.get('page', 1))
+    
+    total_pages = 1 
+    
+    data , total_pages = await recomendation(page, movie_id = item_id, types=types)
+    
+    page = max(1, min(page, total_pages ))  
+
+    context = {
+        "name": "SUGGESTION",
+        'items': data,      
+        'page': page,
+        "total_pages": total_pages,
+        "has_next": page < total_pages,
+        "has_previous": page > 1,
+    }
+
+    return await sync_to_async(render)(request, "recommendation.html", context)
+
+
+
+
+
+
